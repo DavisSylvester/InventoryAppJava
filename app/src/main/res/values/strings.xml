@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">InventoryApp</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_add_product">Add Product</string>
     <string name="nav_list_products">List Product</string>
+    <string name="product_name">Name</string>
+    <string name="product_price">Price</string>
+    <string name="product_qty">Qty</string>
+    <string name="product_supplier_name">Supplier Name</string>
+    <string name="product_supplier_phone">Supplier Phone</string>
+    <string name="hint_phone">555-555-1212</string>
+    <string name="save">Save</string>
+    <string name="no_product_name">"Product must have a Name"</string>
+    <string name="no_product_price">"Please provide a Price"</string>
+    <string name="no_product_qty">"Please provide a Quantity on hand"</string>
+    <string name="no_product_supplierName">"Please provide a Supplier Name"</string>
+    <string name="no_product_supplierPhone">"Please provide a Supplier Phone"</string>
 </resources>
