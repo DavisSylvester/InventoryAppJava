@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +18,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    FragmentManager gls;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        gls = getSupportFragmentManager();
 
         InventoryDBHelper helper  = new InventoryDBHelper(getBaseContext());
 
@@ -81,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return itemIds.get(itemIds.size() - 1).toString();
+    }
+
+    public <T extends Fragment>  void startFragment(T frag) {
+
+        gls.beginTransaction()
+                .replace(R.id.csMainContent, frag)
+                .commit();
     }
 
 }
