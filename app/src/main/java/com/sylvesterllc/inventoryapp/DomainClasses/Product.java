@@ -10,6 +10,7 @@ public class Product {
     public String SupplierName;
     public String SupplierPhone;
 
+
     public Product(String name, Integer price, Integer qty, String sName,
                    String sPhone) {
         Name = name;

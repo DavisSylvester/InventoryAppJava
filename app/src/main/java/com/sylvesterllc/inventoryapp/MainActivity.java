@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.sylvesterllc.inventoryapp.DomainClasses.InventoryContract;
 import com.sylvesterllc.inventoryapp.DomainClasses.Product;
+import com.sylvesterllc.inventoryapp.Fragments.ProductListing;
 import com.sylvesterllc.inventoryapp.Helpers.InventoryDBHelper;
 
 import java.util.ArrayList;
@@ -37,11 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = helper.getWritableDatabase();
 
-        AddData(db);
-
-        GetData(db);
-
-        Log.d("HELP", GetData(db));
+        startFragment(new ProductListing());
 
     }
 
@@ -81,11 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String GetData(SQLiteDatabase db) {
+    public List<Product> GetData() {
 
         String[] projection = {
                 BaseColumns._ID,
-                InventoryContract.InventoryEntry.COL_PRODUCT_NAME
+                InventoryContract.InventoryEntry.COL_PRODUCT_NAME,
+                InventoryContract.InventoryEntry.COL_PRICE,
+                InventoryContract.InventoryEntry.COL_QTY,
+                InventoryContract.InventoryEntry.COL_SUPPLIER_NAME,
+                InventoryContract.InventoryEntry.COL_SUPPLIER_PHONE
         };
 
         Cursor cursor = db.query(
@@ -97,20 +98,48 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null);
 
-        List itemIds = new ArrayList<>();
+        List result = new ArrayList<Product>();
 
         while(cursor.moveToNext()) {
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry._ID));
-            itemIds.add(itemId);
+
+            String name = cursor.getString(
+                    cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COL_PRODUCT_NAME));
+
+            int price = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COL_PRICE));
+
+            int qty = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COL_QTY));
+
+            String sName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COL_SUPPLIER_NAME));
+
+            String sPhone = cursor.getString(
+                    cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COL_SUPPLIER_PHONE));
+
+            result.add(new Product(name, price, qty, sName, sPhone));
         }
         cursor.close();
 
-        if (itemIds.size() == 0) {
-            return "No Records";
-        }
+        return result;
+    }
 
-        return itemIds.get(itemIds.size() - 1).toString();
+    public void DeleteOldData() {
+
+        String projection =
+                InventoryContract.InventoryEntry.COL_PRODUCT_NAME + " Like ?";
+
+        String[] selectionArgs = { "%Venum%" };
+
+        int resultCount = db.delete(
+                InventoryContract.InventoryEntry.TABLE_NAME,
+                projection,
+                selectionArgs);
+
+
+        Log.d("HELP", "Deleted " + Integer.toString(resultCount));
     }
 
     public <T extends Fragment>  void startFragment(T frag) {

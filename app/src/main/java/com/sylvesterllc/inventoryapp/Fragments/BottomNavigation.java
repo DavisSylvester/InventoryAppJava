@@ -24,10 +24,6 @@ public class BottomNavigation extends Fragment {
 
     public BottomNavigation() {
         // Required empty public constructor
-
-
-
-
     }
 
     private void addMenuListener(BottomNavigationView menu) {

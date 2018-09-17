@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_list" />
-                            <entry key="sourceFile" value="C:\Apps\fontawesome-pro-5.0.13\advanced-options\raw-svg\solid\list.svg" />
+                            <entry key="outputName" value="ic_shopping_cart" />
+                            <entry key="sourceFile" value="C:\Apps\fontawesome-pro-5.0.13\advanced-options\raw-svg\solid\shopping-cart.svg" />
                           </map>
                         </option>
                       </PersistentState>
