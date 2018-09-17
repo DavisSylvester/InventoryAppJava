@@ -1,6 +1,8 @@
 package com.sylvesterllc.inventoryapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sylvesterllc.inventoryapp.DomainClasses.Product;
+import com.sylvesterllc.inventoryapp.Fragments.AddInventory;
+import com.sylvesterllc.inventoryapp.Fragments.ProductDetails;
+import com.sylvesterllc.inventoryapp.MainActivity;
 import com.sylvesterllc.inventoryapp.R;
 
 
@@ -20,12 +25,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private List<Product> data;
     private Context context;
+    private MainActivity mainActivity;
 
 
-    public ProductAdapter(List<Product> products, Context ctx)  {
+    public ProductAdapter(List<Product> products, Context ctx, MainActivity ma)  {
         data = products;
         context = ctx;
-
+        mainActivity = ma;
 
 
     }
@@ -42,7 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
-        holder.bindProduct(data.get(position), context);
+        holder.bindProduct(data.get(position), context, mainActivity);
     }
 
     @Override
@@ -71,7 +77,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         }
 
-        public void bindProduct(final Product p, final Context context) {
+        public void bindProduct(final Product p, final Context context, final MainActivity mainActivity) {
 
            txtName.setText(p.Name);
            txtPrice.setText("$" + p.Price);
@@ -90,6 +96,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
                         txtQty.setText("Qty: " + p.Qty);
                     }
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    ProductDetails pd = new ProductDetails();
+                    Bundle b = new Bundle();
+                    b.putParcelable("product", p);
+                    pd.setArguments(b);
+                    mainActivity.startFragment(pd);
                 }
             });
 

@@ -27,6 +27,7 @@ public class ProductListing extends Fragment {
     private RecyclerView mRecycleView;
     public RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mlayoutManager;
+    private MainActivity mainActivity;
 
     public ProductListing() {
         // Required empty public constructor
@@ -41,6 +42,7 @@ public class ProductListing extends Fragment {
 
         mRecycleView = v.findViewById(R.id.rvProducts);
 
+        mainActivity = (MainActivity) getActivity();
         setDefaults(getContext());
 
         return v;
@@ -48,9 +50,10 @@ public class ProductListing extends Fragment {
 
     private void setDefaults(Context ctx) {
 
-        List<Product> data = ((MainActivity)getActivity()).GetData();
 
-        mAdapter = new ProductAdapter(data, ctx);
+        List<Product> data = mainActivity.GetData();
+
+        mAdapter = new ProductAdapter(data, ctx, mainActivity);
 
         mlayoutManager = new LinearLayoutManager(ctx);
 
