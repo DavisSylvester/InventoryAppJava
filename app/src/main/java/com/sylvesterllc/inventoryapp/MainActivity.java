@@ -62,13 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Long AddProduct(Product p) {
 
-        ContentValues values = new ContentValues();
-        values.put(InventoryContract.InventoryEntry.COL_PRODUCT_NAME, p.Name);
-        values.put(InventoryContract.InventoryEntry.COL_PRICE, p.Price);
-        values.put(InventoryContract.InventoryEntry.COL_QTY, p.Qty);
-        values.put(InventoryContract.InventoryEntry.COL_SUPPLIER_NAME, p.SupplierName);
-        values.put(InventoryContract.InventoryEntry.COL_SUPPLIER_PHONE, p.SupplierPhone);
-
+        ContentValues values = GenerateContentValues(p);
 
         long newRowId = db.insert(InventoryContract.InventoryEntry.TABLE_NAME, null, values);
 
@@ -142,6 +136,21 @@ public class MainActivity extends AppCompatActivity {
         Log.d("HELP", "Deleted " + Integer.toString(resultCount));
     }
 
+    public void UpdateData(String productName, Product p) {
+
+        ContentValues values = GenerateContentValues(p);
+
+        String where = InventoryContract.InventoryEntry.COL_PRODUCT_NAME + " = ?";
+
+        String[] whereArgs = { productName };
+
+        db.update(InventoryContract.InventoryEntry.TABLE_NAME,
+                values,
+                where,
+                whereArgs
+                );
+    }
+
     public <T extends Fragment>  void startFragment(T frag) {
 
         gls.beginTransaction()
@@ -195,6 +204,18 @@ public class MainActivity extends AppCompatActivity {
 
             ClearForm(name, price, qty, supplierName, supplierPhone);
         }
+    }
+
+    private ContentValues GenerateContentValues(Product p) {
+
+        ContentValues values = new ContentValues();
+        values.put(InventoryContract.InventoryEntry.COL_PRODUCT_NAME, p.Name);
+        values.put(InventoryContract.InventoryEntry.COL_PRICE, p.Price);
+        values.put(InventoryContract.InventoryEntry.COL_QTY, p.Qty);
+        values.put(InventoryContract.InventoryEntry.COL_SUPPLIER_NAME, p.SupplierName);
+        values.put(InventoryContract.InventoryEntry.COL_SUPPLIER_PHONE, p.SupplierPhone);
+
+        return values;
     }
 
     public List<String> Validated(String name, String price, String qty, String sName,

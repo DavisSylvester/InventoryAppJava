@@ -1,7 +1,6 @@
 package com.sylvesterllc.inventoryapp.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sylvesterllc.inventoryapp.DomainClasses.Product;
-import com.sylvesterllc.inventoryapp.Fragments.AddInventory;
 import com.sylvesterllc.inventoryapp.Fragments.ProductDetails;
 import com.sylvesterllc.inventoryapp.MainActivity;
 import com.sylvesterllc.inventoryapp.R;
@@ -71,8 +69,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             super(itemView);
 
             txtName = itemView.findViewById(R.id.txtProductName);
-            txtPrice = itemView.findViewById(R.id.txtPrice);
-            txtQty = itemView.findViewById(R.id.txtQty);
+            txtPrice = itemView.findViewById(R.id.txtSupplierPhone);
+            txtQty = itemView.findViewById(R.id.txtSupplierPhone);
             btnBuy = itemView.findViewById(R.id.imgBtnBuy);
 
         }

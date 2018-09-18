@@ -15,4 +15,8 @@
     <string name="no_product_qty">"Please provide a Quantity on hand"</string>
     <string name="no_product_supplierName">"Please provide a Supplier Name"</string>
     <string name="no_product_supplierPhone">"Please provide a Supplier Phone"</string>
+    <string name="product_detail_page">Product Detail Page</string>
+    <string name="button_delete_text">Delete</string>
+    <string name="qty_label">QTY</string>
+    <string name="out_of_stock_text">We are currently out of Stock</string>
 </resources>
