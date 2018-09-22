@@ -25,7 +25,7 @@
         tools:text="Product Name 1" />
 
     <EditText
-        android:id="@+id/txtSupplierPhone"
+        android:id="@+id/txtPrice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -147,7 +147,7 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtSupplierPhone" />
+        app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 
     <TextView
         android:id="@+id/lblQty"

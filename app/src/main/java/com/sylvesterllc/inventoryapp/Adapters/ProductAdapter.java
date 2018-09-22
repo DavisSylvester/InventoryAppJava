@@ -69,8 +69,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             super(itemView);
 
             txtName = itemView.findViewById(R.id.txtProductName);
-            txtPrice = itemView.findViewById(R.id.txtSupplierPhone);
-            txtQty = itemView.findViewById(R.id.txtSupplierPhone);
+            txtPrice = itemView.findViewById(R.id.txtPrice);
+            txtQty = itemView.findViewById(R.id.txtQty);
             btnBuy = itemView.findViewById(R.id.imgBtnBuy);
 
         }
