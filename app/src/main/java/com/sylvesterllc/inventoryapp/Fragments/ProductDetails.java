@@ -75,7 +75,7 @@ public class ProductDetails extends Fragment {
         etProductPrice = v.findViewById(R.id.txtPrice);
         etProductQty = v.findViewById(R.id.txtQty);
         etProductSupplierName = v.findViewById(R.id.txtSupplierName);
-        etProductSupplierPhone = v.findViewById(R.id.txtPrice);
+        etProductSupplierPhone = v.findViewById(R.id.txtSupplierPhone);
 
         etProductName.setText(product.Name);
         etProductPrice.setText("$" + product.Price);
@@ -98,9 +98,6 @@ public class ProductDetails extends Fragment {
                 Log.d("HELP", "You clicked the Delete Button");
 
                 MainActivity ma =  (MainActivity) getActivity();
-//                DeleteProductDialog pdp = new DeleteProductDialog();
-//                pdp.setArguments("");
-//                pdp.show(getActivity().getFragmentManager(), "GGGG");
 
                 showDialog(product, ma);
             }
@@ -155,6 +152,8 @@ public class ProductDetails extends Fragment {
 
                 MainActivity ma = ((MainActivity) getActivity());
 
+                setProductValuesBeforeSave();
+
                 if (ma != null) {
                     List<String> errors = ma.Validated(product.Name,
                            Integer.toString(product.Price), Integer.toString(product.Qty),
@@ -176,12 +175,19 @@ public class ProductDetails extends Fragment {
 
                     ma.UpdateData(originalProductName, product);
 
-
                     Log.d("HELP", "So you want to save a Product huh");
                 }
             }
         });
 
+    }
+
+    private void setProductValuesBeforeSave() {
+        product.Name = etProductName.getText().toString();
+        product.Price = Integer.parseInt(etProductPrice.getText().toString());
+        product.Qty = Integer.parseInt(etProductQty.getText().toString());
+        product.SupplierName = etProductSupplierName.getText().toString();
+        product.SupplierPhone = etProductSupplierPhone.getText().toString();
     }
 
     private void showDialog(final Product product, final MainActivity ma) {

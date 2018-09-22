@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager gls;
     SQLiteDatabase db;
     TextView noData;
+    boolean cleanDatabase = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         InventoryDBHelper helper  = new InventoryDBHelper(getBaseContext());
 
         db = helper.getWritableDatabase();
+
+        DeleteOldData();
 
         if (hasProducts()) {
             noData.setVisibility(View.GONE);
@@ -131,18 +134,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void DeleteOldData() {
 
-        String projection =
-                InventoryContract.InventoryEntry.COL_PRODUCT_NAME + " Like ?";
+        if (cleanDatabase) {
+            String projection =
+                    InventoryContract.InventoryEntry.COL_PRODUCT_NAME + " Like ?";
 
-        String[] selectionArgs = { "%Venum%" };
+            String[] selectionArgs = {"%Venum%"};
 
-        int resultCount = db.delete(
-                InventoryContract.InventoryEntry.TABLE_NAME,
-                projection,
-                selectionArgs);
+            int resultCount = db.delete(
+                    InventoryContract.InventoryEntry.TABLE_NAME,
+                    projection,
+                    selectionArgs);
 
+            Log.d("HELP", "Deleted " + Integer.toString(resultCount));
 
-        Log.d("HELP", "Deleted " + Integer.toString(resultCount));
+            AddData(db);
+        }
     }
 
     public void DeleteProduct(String productName) {

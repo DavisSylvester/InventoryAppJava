@@ -61,8 +61,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView txtName;
         TextView txtPrice;
         TextView txtQty;
-//        TextView txtSupplierName;
-//        TextView txtSupplierPhone;
         ImageButton btnBuy;
 
         public ViewHolder(View itemView) {
