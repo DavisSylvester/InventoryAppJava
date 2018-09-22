@@ -46,7 +46,7 @@ public class ProductDetails extends Fragment {
     String originalProductName;
 
     public ProductDetails() {
-        // Required empty public constructor
+
     }
 
 
@@ -183,8 +183,14 @@ public class ProductDetails extends Fragment {
     }
 
     private void setProductValuesBeforeSave() {
+        String formatedPrice = etProductPrice.getText().toString();
+
+        if (formatedPrice.contains("$")) {
+
+            formatedPrice = formatedPrice.substring(1, formatedPrice.length());
+        }
         product.Name = etProductName.getText().toString();
-        product.Price = Integer.parseInt(etProductPrice.getText().toString());
+        product.Price = Integer.parseInt(formatedPrice);
         product.Qty = Integer.parseInt(etProductQty.getText().toString());
         product.SupplierName = etProductSupplierName.getText().toString();
         product.SupplierPhone = etProductSupplierPhone.getText().toString();
