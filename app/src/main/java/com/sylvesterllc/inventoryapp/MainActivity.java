@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sylvesterllc.inventoryapp.DomainClasses.InventoryContract;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager gls;
     SQLiteDatabase db;
+    TextView noData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gls = getSupportFragmentManager();
+        noData = findViewById(R.id.txtNoData);
 
         InventoryDBHelper helper  = new InventoryDBHelper(getBaseContext());
 
         db = helper.getWritableDatabase();
 
-        startFragment(new ProductListing());
+        if (hasProducts()) {
+            noData.setVisibility(View.GONE);
+            startFragment(new ProductListing());
+        }
+        else {
+            noData.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -136,6 +145,22 @@ public class MainActivity extends AppCompatActivity {
         Log.d("HELP", "Deleted " + Integer.toString(resultCount));
     }
 
+    public void DeleteProduct(String productName) {
+
+        String projection =
+                InventoryContract.InventoryEntry.COL_PRODUCT_NAME + " = ?";
+
+        String[] selectionArgs = { productName };
+
+        int resultCount = db.delete(
+                InventoryContract.InventoryEntry.TABLE_NAME,
+                projection,
+                selectionArgs);
+
+
+        Log.d("HELP", "Deleted " + Integer.toString(resultCount));
+    }
+
     public void UpdateData(String productName, Product p) {
 
         ContentValues values = GenerateContentValues(p);
@@ -152,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public <T extends Fragment>  void startFragment(T frag) {
+
+        noData.setVisibility(View.GONE);
 
         gls.beginTransaction()
                 .replace(R.id.csMainContent, frag)
@@ -256,6 +283,21 @@ public class MainActivity extends AppCompatActivity {
         qty.setText("");
         sName.setText("");
         sPhone.setText("");
+    }
+
+    private boolean hasProducts() {
+
+        Cursor cursor = db.rawQuery("SELECT Count(*) FROM " +
+                InventoryContract.InventoryEntry.TABLE_NAME + ";", null);
+
+        cursor.moveToFirst();
+
+        int totalRows = cursor.getInt(0);
+
+        Log.d("HELP", "Total Rows: " + totalRows);
+
+        return (totalRows == 0) ? false : true;
+
     }
 
 }

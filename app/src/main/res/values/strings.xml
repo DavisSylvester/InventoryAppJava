@@ -19,4 +19,5 @@
     <string name="button_delete_text">Delete</string>
     <string name="qty_label">QTY</string>
     <string name="out_of_stock_text">We are currently out of Stock</string>
+    <string name="no_data">There are no Product Listed! Please Click Add Product Button on the bottom</string>
 </resources>

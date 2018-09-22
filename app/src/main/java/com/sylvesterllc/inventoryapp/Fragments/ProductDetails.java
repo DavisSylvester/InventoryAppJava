@@ -2,6 +2,8 @@ package com.sylvesterllc.inventoryapp.Fragments;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -58,6 +60,8 @@ public class ProductDetails extends Fragment {
         product = b.getParcelable("product");
 
 
+
+
         Log.d("HELP", product.Name);
 
         View view = inflater.inflate(R.layout.fragment_product_details, container, false);
@@ -95,8 +99,12 @@ public class ProductDetails extends Fragment {
             public void onClick(View view) {
                 Log.d("HELP", "You clicked the Delete Button");
 
-                DeleteProductDialog pdp = new DeleteProductDialog();
-                pdp.show(getActivity().getSupportFragmentManager(), "GGGG");
+                MainActivity ma =  (MainActivity) getActivity();
+//                DeleteProductDialog pdp = new DeleteProductDialog();
+//                pdp.setArguments("");
+//                pdp.show(getActivity().getFragmentManager(), "GGGG");
+
+                showDialog(product, ma);
             }
         });
 
@@ -176,6 +184,31 @@ public class ProductDetails extends Fragment {
             }
         });
 
+    }
+
+    private void showDialog(final Product product, final MainActivity ma) {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Delete entry")
+                .setMessage("Are you sure you want to delete this entry?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("HELP", "You really want to delete product: " + product.Name);
+
+                        ma.DeleteProduct(product.Name);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("HELP", "You want to cancel");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override

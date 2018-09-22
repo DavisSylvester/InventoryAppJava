@@ -7,14 +7,19 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import com.sylvesterllc.inventoryapp.DomainClasses.Product;
+import com.sylvesterllc.inventoryapp.Interfaces.DeleteDialogListener;
+import com.sylvesterllc.inventoryapp.Interfaces.DeleteDialogListener.IDeleteDialogListener;
+import com.sylvesterllc.inventoryapp.MainActivity;
 import com.sylvesterllc.inventoryapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DeleteProductDialog extends DialogFragment {
-
+public class DeleteProductDialog extends DialogFragment
+    implements IDeleteDialogListener{
 
     public DeleteProductDialog() {
         // Required empty public constructor
@@ -23,12 +28,13 @@ public class DeleteProductDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
 
         builder.setMessage("Delete Product")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int id) {
 
+                        Log.d("HELP", "You really want to delete this file");
 
                     }
                 })
@@ -36,7 +42,10 @@ public class DeleteProductDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                Log.d("HELP", "You want to cancel");
             }
+
+
         });
 
         return builder.create();
@@ -44,11 +53,14 @@ public class DeleteProductDialog extends DialogFragment {
     }
 
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_delete_product_dialog, container, false);
-//    }
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        Log.d("HELP", "I received Positive feedback");
+    }
 
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+        Log.d("HELP", "I received Negative feedback");
+    }
 }
